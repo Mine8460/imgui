@@ -1,7 +1,8 @@
 project "ImGui"
 	kind "StaticLib"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++20"
+	staticruntime "on"
 	warnings "off"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
@@ -29,18 +30,20 @@ project "ImGui"
 		"../GLFW/include"
 	}
 
+
+
 	filter "system:windows"
 		systemversion "latest"
-		cppdialect "C++20"
+
+			defines
+			{
+				_CRT_SECURE_NO_WARNINGS
+			}
 
 	filter "configurations:Debug"
-		buildoptions "/MDd"
-		symbols "On"
+		runtime "Debug"
+		symbols "on"
 
 	filter "configurations:Release"
-		buildoptions "/MD"
-		optimize "On"
-
-	filter "configurations:Dist"
-		buildoptions "/MD"
-		optimize "On"
+		runtime "Release"
+		optimize "on"
